@@ -17,31 +17,35 @@ export default function ItemForm({ itemToUpdate }) {
   };
 
   const [item, setItem] = useState(itemToUpdate ? itemToUpdate : defaultItem);
-  const { addItem, updateItem } = useStock();
+  const { addItem } = useStock();
   const inputRef = useRef(null);
 
   const handleChange = (ev) => {
     setItem((current) => ({ ...current, [ev.target.name]: ev.target.value }));
   };
-
+  //Faltando 13 min Aula parte 2
   const handleSubmit = (ev) => {
     ev.preventDefault();
     try {
-      if (itemToUpdate) {
-        updateItem(itemToUpdate.id, item);
-        alert("Item atualizado com sucesso!");
-      } else {
-        const validItem = new StockItem(item);
-        addItem(validItem);
-        setItem(defaultItem);
-        alert("Item cadastrado com sucesso!");
-      }
+      // if (itemToUpdate) {
+      //   updateItem(itemToUpdate.id, item);
+      //   alert("Item atualizado com sucesso!");
+      // } else {
+      const validItem = new StockItem(item);
+      console.log(validItem);
+      addItem(validItem);
+      //   //inserido o this
+      //   this.addItem(validItem);
+      //   setItem(defaultItem);
+      //   alert("Item cadastrado com sucesso!");
+      // }
     } catch (err) {
       console.log(err.message);
       alert("Ocorreu um erro.");
-    } finally {
-      inputRef.current.focus();
     }
+    // finally {
+    //   inputRef.current.focus();
+    // }
   };
 
   return (
