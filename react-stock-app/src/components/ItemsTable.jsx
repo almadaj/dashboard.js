@@ -1,7 +1,6 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import useStock from "../hooks/useStock";
-import { StockContext } from "../contexts/StockContext";
+import useStock from "../hooks/useStock.js";
+
 export default function ItemsTable() {
   const { items } = useStock();
 
@@ -17,7 +16,7 @@ export default function ItemsTable() {
         </tr>
       </thead>
       <tbody>
-        {/* {items.map((item) => (
+        {items?.map((item) => (
           <tr key={item.id}>
             <td>{item.id}</td>
             <td>{item.name}</td>
@@ -35,7 +34,7 @@ export default function ItemsTable() {
               </Link>
             </td>
           </tr>
-        ))} */}
+        ))}
       </tbody>
     </table>
   );
