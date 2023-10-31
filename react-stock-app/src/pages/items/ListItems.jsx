@@ -1,4 +1,4 @@
-import ItemsTable from "../../components/ItemsTable";
+import ItemsTable from "../../components/ItemTable";
 
 export default function ListItems() {
   return <ItemsTable />;

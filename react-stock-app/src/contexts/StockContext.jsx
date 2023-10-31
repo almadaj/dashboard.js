@@ -1,5 +1,5 @@
-import { createContext, useState } from "react";
 import PropTypes from "prop-types";
+import { createContext, useState } from "react";
 
 export const StockContext = createContext({});
 
@@ -14,49 +14,48 @@ export function StockContextProvider({ children }) {
     const items = JSON.parse(storedItems);
     items.forEach((item) => {
       item.createdAt = new Date(item.createdAt);
-      item.updatedAt = new Date(item.updatedAt);
+      item.updateAt = new Date(item.updateAt);
     });
     return items;
   });
 
   const addItem = (item) => {
-    setItems((current) => {
-      const updatedItems = [item, ...current];
+    setItems((currentState) => {
+      const updatedItems = [item, ...currentState];
       localStorage.setItem("obc-react-stock", JSON.stringify(updatedItems));
       return updatedItems;
     });
   };
 
   const getItem = (itemId) => {
-    return items.find((i) => i.id === +itemId);
-  };
-
-  const updateItem = (itemId, newAttributes) => {
-    setItems((current) => {
-      const itemIndex = current.findIndex((i) => i.id === itemId);
-      const updatedItems = [...current];
-      Object.assign(updatedItems[itemIndex], newAttributes, {
-        updatedAt: new Date(),
-      });
-      localStorage.setItem("obc-react-stock", JSON.stringify(updatedItems));
-      return updatedItems;
-    });
+    return items.find((item) => item.id === +itemId);
   };
 
   const deleteItem = (itemId) => {
-    setItems((current) => {
-      const updatedItems = current.filter((item) => item.id !== itemId);
+    setItems((currentState) => {
+      const updatedItems = currentState.filter((item) => item.id !== itemId);
       localStorage.setItem("obc-react-stock", JSON.stringify(updatedItems));
       return updatedItems;
     });
   };
 
+  const updateItem = (itemId, newAttribute) => {
+    setItems((currentState) => {
+      const itemIndex = currentState.findIndex((item) => item.id === itemId);
+      const updatedItem = [...currentState];
+      Object.assign(updatedItem[itemIndex], newAttribute, {
+        updateAt: new Date(),
+      });
+      localStorage.setItem("obc-react-stock", JSON.stringify(updatedItem));
+      return updatedItem;
+    });
+  };
   const stock = {
     items,
     addItem,
+    deleteItem,
     getItem,
     updateItem,
-    deleteItem,
   };
 
   return (
